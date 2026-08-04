@@ -52,6 +52,18 @@ const App = () => {
       console.log(error);
     }
   }
+  async function handleError() {
+    try {
+      const response = await axios.get("http://localhost:3000/error", {
+        withCredentials: true,
+      });
+      const result = response.data.message;
+      setMessage(result);
+    } catch (error) {
+      console.log(error.response.data.message);
+      setMessage(error.response.data.message);
+    }
+  }
   return (
     <div>
       <input type="text" onChange={handleChange} name="name" value={name} />
@@ -60,6 +72,7 @@ const App = () => {
       <h1>{message}</h1>
       <button onClick={getData}>getData</button>
       <button onClick={handleLogout}>logout</button>
+      <button onClick={handleError}>error</button>
     </div>
   );
 };

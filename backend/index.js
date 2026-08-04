@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import { AppError } from "./AppError.js";
 
 import cookieParser from "cookie-parser";
 
@@ -39,10 +40,8 @@ app.get("/logout", (req, res) => {
   });
 });
 
-app.get("/error", (req, res) => {
-  res.status(404).json({
-    message: "page not found",
-  });
+app.get("/error", (req, res, next) => {
+  return next(new AppError("not found", 404));
 });
 
 app.get("/", (req, res) => {

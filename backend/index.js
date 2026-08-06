@@ -44,6 +44,32 @@ app.get("/error", (req, res, next) => {
   return next(new AppError("not found", 404));
 });
 
+function mymidd(req, res, next) {
+  const name = req.body.name;
+  if (name === "jeevan") {
+    next();
+  } else {
+    res.status(404).json({
+      message: "not matched",
+    });
+  }
+}
+function capsmidd(req, res, next) {
+  const name = req.body.name;
+  if (name.length === 6) {
+    next();
+  } else {
+    res.status(404).json({
+      message: "it shoud be atleans 6 char",
+    });
+  }
+}
+app.post("/verify", mymidd, capsmidd, (req, res) => {
+  res.json({
+    message: true,
+  });
+});
+
 app.get("/", (req, res) => {
   res.send("wellcome");
 });

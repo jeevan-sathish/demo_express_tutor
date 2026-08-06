@@ -1,78 +1,25 @@
-import { useState } from "react";
-import axios from "axios";
+import { useRef, useState } from "react";
 
 const App = () => {
-  const [name, setName] = useState("");
-  const [message, setMessage] = useState("");
-  function handleChange(e) {
-    setName(e.target.value);
-  }
-  async function handleSubmit() {
-    try {
-      const response = await axios.post(
-        "http://localhost:3000/login",
-        {
-          name: name,
-        },
-        {
-          withCredentials: true,
-        },
-      );
-      const result = await response.data.message;
-      setMessage(result);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  async function getData() {
-    try {
-      const response = await axios.get(
-        "http://localhost:3000/profile",
-
-        {
-          withCredentials: true,
-        },
-      );
-      const result = await response.data.message;
-      setMessage(result);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  async function handleLogout() {
-    try {
-      const response = await axios.get("http://localhost:3000/logout", {
-        withCredentials: true,
-      });
-      const result = response.data.message;
-      setMessage(result);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  async function handleError() {
-    try {
-      const response = await axios.get("http://localhost:3000/error", {
-        withCredentials: true,
-      });
-      const result = response.data.message;
-      setMessage(result);
-    } catch (error) {
-      console.log(error.response.data.message);
-      setMessage(error.response.data.message);
-    }
-  }
+  const inputRef = useRef();
+  const [text, setText] = useState("");
   return (
     <div>
-      <input type="text" onChange={handleChange} name="name" value={name} />
-      <button onClick={handleSubmit}>submit</button>
+      <input
+        type="text"
+        name="text"
+        value={text}
+        onChange={(e) => (
+          setText(e.target.value),
+          console.log(text, "rerendered")
+        )}
+      />
 
-      <h1>{message}</h1>
-      <button onClick={getData}>getData</button>
-      <button onClick={handleLogout}>logout</button>
-      <button onClick={handleError}>error</button>
+      <input
+        type="text"
+        ref={inputRef}
+        onChange={() => console.log(inputRef.current.value)}
+      />
     </div>
   );
 };

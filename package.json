@@ -1,0 +1,11 @@
+{
+  "scripts": {
+    "frontend": "npm --prefix frontend run dev",
+    "server1": "node backend/server1/index.js",
+    "server2": "node backend/server2/index.js",
+    "dev": "concurrently \"npm run frontend\" \"npm run server1\" \"npm run server2\""
+  },
+  "devDependencies": {
+    "concurrently": "^..."
+  }
+}

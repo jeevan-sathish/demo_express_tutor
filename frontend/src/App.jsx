@@ -7,6 +7,7 @@ const App = () => {
       {count}
       <button onClick={increment}>increment</button>
       <button onClick={decrement}>decrement</button>
+      <h1>{count}</h1>
     </div>
   );
 };

@@ -1,16 +1,21 @@
-import { useEffect } from "react";
-
+import axios from "axios";
 const App = () => {
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      const latitude = position.coords.latitude;
-      const longitude = position.coords.longitude;
-
-      console.log(latitude);
-      console.log(longitude);
-    });
-  }, []);
-  return <div>App</div>;
+  async function sendData() {
+    try {
+      const response = await axios.post("http://localhost:3000/data", {
+        name: "jeevan",
+      });
+      const result = response.data.message;
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  return (
+    <div>
+      <button onClick={sendData}>send</button>
+    </div>
+  );
 };
 
 export default App;

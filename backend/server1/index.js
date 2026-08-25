@@ -6,8 +6,23 @@ const port = 3000;
 app.use(express.json());
 app.use(cors());
 
-app.get("/", (req, res) => {
-  res.send("home");
+function myMidd(req, res, next) {
+  const { name } = req.body;
+  if (name === "jeevan") {
+    req.userName = name + "s";
+    next();
+  } else {
+    return res.status(201).json({
+      message: "error",
+    });
+  }
+}
+
+app.post("/data", myMidd, (req, res) => {
+  const username = req.userName;
+  return res.json({
+    message: `${username} successfull`,
+  });
 });
 
 app.listen(port, () => {
